@@ -5,7 +5,6 @@ const crypto=require('crypto')
 
 exports.confirmEmail=(req,res)=>{
     Token.findOne({token:req.params.userToken},(error,token)=>{
-
         if(!token){
             return res.status(400).json({
                 error:"invalid token or token may have expired"

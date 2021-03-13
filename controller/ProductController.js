@@ -2,14 +2,13 @@ const Product=require('../model/product');
 const User = require('../model/User');
 // to read the data from database
 exports.read=(req,res)=>{
-    Product.find().sort({createdAt:-1})
+        Product.find().sort({createdAt:-1})
     .then(products=>{
         setTimeout(()=>{
             res.json({products})
         },1000)
         
-
-    })
+})
     .catch(err=>{
         console.log(err)
     })

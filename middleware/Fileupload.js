@@ -37,6 +37,5 @@ const upload=multer({
     {
         fileSize:2000000//2MB
     },
-
 })
 module.exports= upload

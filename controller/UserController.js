@@ -35,7 +35,6 @@ exports.postUser=(req,res)=>{
 }
 
 
-
 exports.signIn=(req,res)=>{
     const {email,password}=req.body
     User.findOne({email},(error,user)=>{

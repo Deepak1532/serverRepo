@@ -1,5 +1,4 @@
 const Category=require('../model/Category')
-
 exports.postCategory=(req,res)=>{
     let category=new Category(req.body)
     category.save((error,result)=>{

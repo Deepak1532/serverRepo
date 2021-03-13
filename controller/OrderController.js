@@ -1,6 +1,5 @@
 const Order=require('../model/Order')
 const OrderItem=require('../model/OrderItem')
-
 exports.postOrderItems=(req,res)=>{
     let newOrderItem=new OrderItem({
 		quantity:req.body.quantity,
