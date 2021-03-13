@@ -1,0 +1,12 @@
+footer {
+	padding: 1em;
+	text-align: center;
+	color: #fff;
+}
+footer	a {
+	color: #4c4c4c;
+}
+footer a:hover {
+	color: #ff3f40;
+}
+	

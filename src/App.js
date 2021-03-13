@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import './maincard.css'
+import Maincard from './components/ordercomponent/Maincard';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div>
-      <h1> thapeko hai anil le </h1>
+      <Navbar/>
     </div>
   );
 }
