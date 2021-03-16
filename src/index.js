@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './navbar.css';
 import './footer.css';
-
+import './vegCard.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Routes from './components/Routes';
