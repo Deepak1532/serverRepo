@@ -10,12 +10,12 @@ import {
 }
     from '../constants/productConstant'
 
-export const getProducts=()=>async(dispatch )=>{
+export const getProducts=(keyword='')=>async(dispatch )=>{
     try{
         dispatch({
             type:ALL_PRODUCTS_REQUEST
         })
-        const {data}=await axios.get('/api/getproduct')
+        const {data}=await axios.get(`/api/getproduct?keyword=${keyword}`)
 
         dispatch({
             type:ALL_PRODUCTS_SUCCESS,

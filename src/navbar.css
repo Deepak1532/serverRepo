@@ -4,7 +4,7 @@
   background: linear-gradient(90deg, rgba(236,53,25,1) 0%, rgba(241,174,72,0.8379726890756303) 33%, rgba(244,120,62,1) 51%, rgba(190,247,108,0.9668242296918768) 100%);
   
   }
-  .navbaricon{
+  .search .navbaricon{
     display: flex;
   }
   

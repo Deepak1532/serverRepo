@@ -1,30 +1,16 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 
-function Navbar() {
+
+
+import Search from './Search'
+
+function Navbar({history}) {
     return (
         <div>
-            <div className="container-fluid">
-             <div className="row">
-               <div className="col-md-3"></div>
-               <div className="col-md-6">
-               <form className="d-flex">
-                  <input className="form-control " type="search" placeholder="Search" aria-label="Search"/>
-                  <button className="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-                  
-                </form> 
-               </div>
-               <div className="col-md-3">
-               <div className="icon navbaricon">
-                  <Link className="nav-link bi"  aria-current="page" to="">Wish List<i class="bi bi-heart-fill mx-2"></i></Link>
-                  <Link className="nav-link bi"  aria-current="page" to="">Cart<i class="bi bi-cart-fill mx-2" ></i></Link>
-                  <Link className="nav-link bi"  aria-current="page" to=""><i class="bi bi-people-fill mx-2"></i></Link>
-               
-                </div>
-               </div>
-            </div>
-          </div>
-          <nav className="navbar navbar-expand-lg  navbar-light">
+          <Route render={({history})=> <Search history={history}/> }/>
+            <nav className="navbar navbar-expand-lg  navbar-light">
           <div className="container-fluid">
           <a className="navbar-brand" href="#">
           {/* <img src="http://placehold.it/3*3?text=Logo" id="brandlogo" alt=""/> */}

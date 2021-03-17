@@ -5,16 +5,15 @@ import Navbar from './Navbar'
 import {Link} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {getProductDetails, getProducts} from '../actions/productAction'
-import Cardtest from './Cardtest'
 import Loader from './Loader'
-function Home() {
+function Home({match}) {
     const dispatch =useDispatch()
     const {loading,products,error}=useSelector(state=>state.products)
-
+    const keyword=match.params.keyword
     useEffect(()=>{
-        dispatch(getProducts());
+        dispatch(getProducts(keyword));
         dispatch(getProductDetails());
-    },[dispatch])
+    },[dispatch,keyword])
     return (
         <div>
 
