@@ -1,12 +1,14 @@
 const Product=require('../model/product');
 const User = require('../model/User');
+
+const APIFeatures =require('../utils/apiFeature')
 // to read the data from database
 exports.read=(req,res)=>{
         Product.find().sort({createdAt:-1})
     .then(products=>{
         setTimeout(()=>{
             res.json({products})
-        },1000)
+        },500)
         
 })
     .catch(err=>{
@@ -18,8 +20,8 @@ exports.read=(req,res)=>{
 exports.singleProduct=(req,res)=>{
     const id=req.params.id
     Product.findById(id)
-    .then(products=>{
-        res.json({products})
+    .then(product=>{
+        res.json({product})
 
     })
     .catch(err=>{
@@ -74,3 +76,13 @@ exports.isAdmin=(req,res,next)=>{
     }
     next()
 }
+
+//to search products
+ exports.search=async(req,res)=>{
+     const apiFeature=new APIFeatures(Product.find(),req.query)
+     .search()
+     const products=await apiFeature.query;
+     res.json({
+         products
+    })
+ }
