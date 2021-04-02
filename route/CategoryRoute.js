@@ -1,10 +1,12 @@
 const express=require('express')
 const router=express.Router();
 
-const {postCategory, isAdmin}=require('../controller/CategoryController');
-const { requireSignin, userById } = require('../controller/UserController');
+const {postCategory, isAdmin, read}=require('../controller/CategoryController');
+const { requireSignin, userById, authorizedUser } = require('../controller/UserController');
 
 
-router.post('/postcategory/:userId',isAdmin,requireSignin,postCategory)
+router.post('/postcategory/:userId',requireSignin, authorizedUser,isAdmin,postCategory)
+router.get('/getcategory',read)
+
 router.param('userId',userById)
 module.exports=router

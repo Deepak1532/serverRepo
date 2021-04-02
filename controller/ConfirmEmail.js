@@ -10,9 +10,7 @@ exports.confirmEmail=(req,res)=>{
                 error:"invalid token or token may have expired"
             })
         }
-        User.findOne({
-            _id:token.userId,
-            email:req.body.email},(error,user)=>{
+        User.findOne({ _id:token.userId},(error,user)=>{
                 if(!user){
                 return res.status(400).json({
                     error:"the email you provided not associated with this token"
@@ -20,7 +18,7 @@ exports.confirmEmail=(req,res)=>{
             }
             
 
-            if(user.isVerified) return res.status(400).json({error:'email is already verifid,please log in'})
+            // if(user.isVerified) return res.status(400).json({error:'email is already verifid,please log in'})
 
             user.isVerified=true
 

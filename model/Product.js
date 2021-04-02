@@ -1,4 +1,6 @@
 const mongoose=require('mongoose');
+const {ObjectId}=mongoose.Schema
+
 const productSchema=new mongoose.Schema(
     {
         product_name:{
@@ -31,6 +33,11 @@ const productSchema=new mongoose.Schema(
             type:String,
             required:true
         },
+        category:{
+            type:ObjectId,
+            required:true,
+            ref:'Category'
+        }
         
     },{timestamps:true}
 )

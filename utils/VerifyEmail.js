@@ -13,7 +13,8 @@ const sendEmail=option=>{
           from:option.from,
           to:option.to,
           subject:option.subject,
-          text:option.text
+          text:option.text,
+          html:option.html
       }
       transport.sendMail(mailOptions)
 }

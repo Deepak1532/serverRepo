@@ -14,3 +14,16 @@ exports.isAdmin=(req,res,next)=>{
     }
     next()
 }
+
+exports.read=(req,res)=>{
+    Category.find().sort({createdAt:-1})
+.then(category=>{
+    setTimeout(()=>{
+        res.json(category)
+    },2000)
+    
+})
+.catch(err=>{
+    console.log(err)
+})
+}

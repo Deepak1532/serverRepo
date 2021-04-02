@@ -8,11 +8,11 @@ exports.read=(req,res)=>{
     .then(products=>{
         setTimeout(()=>{
             res.json({products})
-        },500)
+        },2000)
         
 })
-    .catch(err=>{
-        console.log(err)
+    .catch(error=>{
+        console.log(error)
     })
 }
 
@@ -44,26 +44,27 @@ exports.toUpdate=(req,res)=>{
 //to create data 
 exports.postproduct=(req,res)=>{
     const product=new Product({
-        product_name:req.body.product_name,
-        product_price:req.body.product_price,
-        product_description:req.body.product_description,
-        product_quantity:req.body.product_quantity,
-        product_rating:req.body.product_rating,
-        product_image:req.file.filename
+        product_name:req.body.name,
+        product_price:req.body.price,
+        product_description:req.body.description,
+        product_quantity:req.body.quantity,
+        product_rating:req.body.rating,
+        product_image:req.file.filename,
+        category:req.body.category
     });
-    Product.findOne({product_name:product.product_name},(err,data)=>{
+    Product.findOne({product_name:product.product_name},(error,data)=>{
         if(data==null)
         {
             product.save()
             .then(item=>{
-                res.send("item saved to database");
+                res.json({item});
             })
-            .catch(err=>{
-                res.status(400).send("unable to save to database");
+            .catch(error=>{
+                res.status(400).json({error:"unable to save to database"});
             });
         }
         else{
-            res.status(400).json({msg:'Product must be unique'})
+            res.status(400).json({error:'Product must be unique'})
         }
        
     })
@@ -81,8 +82,79 @@ exports.isAdmin=(req,res,next)=>{
  exports.search=async(req,res)=>{
      const apiFeature=new APIFeatures(Product.find(),req.query)
      .search()
+     .filter()
      const products=await apiFeature.query;
      res.json({
          products
     })
  }
+
+ //to show all the data in descending order with limited data
+ exports.list=(req,res)=>{
+
+    let order=req.query.order ?req.query.order :'asc'
+   let sortBy=req.query.order ?req.query.sortBy :'_id'
+   let limit=req.query.order ? parseInt(req.query.limit) :6
+    
+    Product.find()
+    .populate('category')
+   .sort([[sortBy,order]])
+   .limit(limit)
+
+    .exec((error,products)=>{
+        if(error || !products){
+        return res.status(400).json({
+            error:'product not found'
+        });
+        }
+        
+         res.json(products)
+        
+        
+    });
+};
+
+
+//filter by category and price range
+exports.listBySearch = (req, res) => {
+    let order = req.body.order ? req.body.order : "desc";
+    let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+    let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+    let skip = parseInt(req.body.skip);
+    let findArgs = {};
+
+    // console.log(order, sortBy, limit, skip, req.body.filters);
+    // console.log("findArgs", findArgs);
+
+    for (let key in req.body.filters) {
+        if (req.body.filters[key].length > 0) {
+            if (key === "product_price") {
+                // gte -  greater than price [0-1000]
+                // lte - less than
+                findArgs[key] = {
+                    $gte: req.body.filters[key][0],
+                    $lte: req.body.filters[key][1]
+                };
+            } else {
+                findArgs[key] = req.body.filters[key];
+            }
+        }
+    }
+
+    Product.find(findArgs)
+        .populate("category")
+        .sort([[sortBy, order]])
+        .skip(skip)
+        .limit(limit)
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "Products not found"
+                });
+            }
+            res.json({
+                size: data.length,
+                data
+            });
+        });
+};
