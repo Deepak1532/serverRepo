@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {postproduct,read, singleProduct, toUpdate, search,listBySearch, list}=require('../controller/ProductController');
+const {postproduct,read, singleProduct, toUpdate, search,listBySearch, list,showProducts}=require('../controller/ProductController');
 const {productValidation}=require('../validation/Index')
 
 const user=require('../model/User');
@@ -12,7 +12,9 @@ router.post('/postProduct/:userId',requireSignin,authorizedUser,isAdmin,upload.s
 //router.get('/getproduct',read)
 router.patch('/patchproduct/:id',toUpdate)
 router.get('/getproduct/:id',singleProduct)
-router.get('/getproduct',search)
+// router.get('/getproduct',search)
+
+router.get('/showProduct',showProducts)
 
 router .get('/products',list)
 router.post('/products/by/search',listBySearch)
